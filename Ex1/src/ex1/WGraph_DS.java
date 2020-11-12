@@ -1,7 +1,6 @@
 package ex1;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * This class represents an undirectional weighted graph.
@@ -16,7 +15,7 @@ public class WGraph_DS implements weighted_graph {
 
     private int v_size = 0;
     private int e_size = 0;
-    private int mc = 1;
+    private int mc = 0;
     private HashMap<Integer, node_info> vertices;
     private HashMap<Integer, HashMap<Integer, Double>> edges;
 
@@ -100,6 +99,15 @@ public class WGraph_DS implements weighted_graph {
         public void setTag(double t) {
             tag = t;
         }
+
+        @Override
+        public String toString() {
+            return "NodeInfo{" +
+                    "key = " + key +
+                    ", info = '" + info + '\'' +
+                    ", tag = " + tag +
+                    '}';
+        }
     }
 
     /**
@@ -153,6 +161,8 @@ public class WGraph_DS implements weighted_graph {
     public void addNode(int key) {
         if (vertices.get(key) == null) {
             vertices.put(key, new NodeInfo(key));
+            v_size++;
+            mc++;
         }
     }
 
@@ -163,12 +173,20 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-        if (w < 0) return;
 
+        HashMap<Integer, HashMap<Integer, Double>> hash = new HashMap<Integer, HashMap<Integer, Double>>();
+        HashMap<Integer, Double> subHush = new HashMap<Integer, Double>();
+        if (w < 0) return;
+        if(getNode(node1) == null || getNode(node2) == null) return;
+        if(node1==node2) return;
         if (!hasEdge(node1, node2)) {
-            HashMap<Integer, Double> w_graph = new HashMap<Integer, Double>();
-            w_graph.put(node2, w);
-            edges.put(node1, (w_graph));
+            subHush.put(node2, w);
+            edges.put(node1, subHush);
+        }
+        else if (w != getEdge(node1, node2)) {
+           // subHush.put()
+            hash.get(node1).put(node2, w);
+
         }
     }
 
@@ -188,12 +206,16 @@ public class WGraph_DS implements weighted_graph {
      * This method returns a Collection containing all the
      * nodes connected to node_id
      * Note: this method can run in O(k) time, k - being the degree of node_id.
-     * @return Collection<node_data>
+     * @return Collection<node_info>
      */
     @Override
     public Collection<node_info> getV(int node_id) { //<<<<<<<<<<<<<<<<<<<<
         if (getNode(node_id) == null) return null;
-        return null;
+        List<node_info> list =new LinkedList<node_info>();
+        for(int n : edges.get(node_id).keySet()){
+            list.add(getNode(n));
+        }
+        return list;
     }
 
     /**
@@ -246,5 +268,16 @@ public class WGraph_DS implements weighted_graph {
     @Override
     public int getMC() {//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         return mc;
+    }
+
+    @Override
+    public String toString() {
+        return "WGraph_DS{" +
+                "v_size = " + v_size +
+                ", e_size = " + e_size +
+                ", mc=" + mc +
+                ", vertices = " + vertices.keySet() +
+                ", edges = " + edges +
+                '}';
     }
 }
