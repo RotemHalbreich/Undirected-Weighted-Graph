@@ -3,6 +3,7 @@ package ex1;
 import java.util.List;
 
 public class WGraph_Algo implements weighted_graph_algorithms {
+
     @Override
     public void init(weighted_graph g) {
 
