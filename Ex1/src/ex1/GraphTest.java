@@ -77,6 +77,10 @@ public class GraphTest {
 //
 //
 //        weighted_graph g = new WGraph_DS();
+        for(int i=0;i<10;i++){
+            g.addNode(i);
+        }
+        for(int i=1;i<10;i++)g.connect(i-1,i,i);
         g.addNode(1);
         g.addNode(2);
         g.addNode(3);

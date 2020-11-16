@@ -102,11 +102,7 @@ public class WGraph_DS implements weighted_graph {
 
         @Override
         public String toString() {
-            return "NodeInfo{" +
-                    "key = " + key +
-                    ", info = '" + info + '\'' +
-                    ", tag = " + tag +
-                    '}';
+            return "NodeInfo{" + "key = " + key + ", info = '" + info + '\'' + ", tag = " + tag + '}';
         }
     }
 
@@ -129,7 +125,7 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
-        // if(node1 == node2) return false;
+        if(node1 == node2) return false;
         if (vertices.get(node1) == null || vertices.get(node2) == null) return false;
         if (edges.containsKey(node1) || edges.containsKey(node2)) {
             if (edges.get(node1) != null && edges.get(node2) != null) {
@@ -181,18 +177,20 @@ public class WGraph_DS implements weighted_graph {
         if(getNode(node1) == null || getNode(node2) == null) return;
         if(node1==node2) return;
         if (!hasEdge(node1, node2)) {
-            if(edges.get(node1) == null) {
-                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
-                hash.put(node2, w);
-                edges.put(node1, hash);
-            }
-            else edges.get(node1).put(node2, w);
-            if(edges.get(node2) == null) {
-                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
-                hash.put(node1, w);
-                edges.put(node2, hash);
-            }
-            else edges.get(node2).put(node1, w);
+            connectDirection(node1, node2, w);
+            connectDirection(node2, node1, w);
+//            if(edges.get(node1) == null) {
+//                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
+//                hash.put(node2, w);
+//                edges.put(node1, hash);
+//            }
+//            else edges.get(node1).put(node2, w);
+//            if(edges.get(node2) == null) {
+//                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
+//                hash.put(node1, w);
+//                edges.put(node2, hash);
+//            }
+//            else edges.get(node2).put(node1, w);
             e_size++;
             mc++;
         }
@@ -203,6 +201,15 @@ public class WGraph_DS implements weighted_graph {
         }
     }
 
+    // Help function for connect():
+    private void connectDirection(int node1, int node2, double w) {
+        if (edges.get(node1) == null) {
+            HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
+            hash.put(node2, w);
+            edges.put(node1, hash);
+        }
+        else edges.get(node1).put(node2, w);
+    }
 
     /**
      * This method return a pointer (shallow copy) for a
@@ -298,12 +305,6 @@ public class WGraph_DS implements weighted_graph {
 
     @Override
     public String toString() {
-        return "WGraph_DS{" +
-                "v_size = " + v_size +
-                ", e_size = " + e_size +
-                ", mc = " + mc +
-                ", v = " + vertices.keySet() +
-                ", e = " + edges.toString() +
-                '}';
+        return "V:" + vertices.keySet() + "\nE:" + edges.toString();
     }
 }
