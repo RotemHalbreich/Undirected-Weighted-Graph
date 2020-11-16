@@ -1,5 +1,6 @@
 package ex1;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,31 +14,39 @@ import java.util.List;
  * 6. Load(file);
  *
  * @author Rotem Halbreich
- *
  */
 
 public class WGraph_Algo implements weighted_graph_algorithms {
 
+    private weighted_graph g;
+
+    public WGraph_Algo() {
+        this.g = new WGraph_DS();
+    }
+
     /**
      * Init the graph on which this set of algorithms operates on.
+     *
      * @param g
      */
     @Override
     public void init(weighted_graph g) {
-
+        this.g = g;
     }
 
     /**
      * Return the underlying graph of which this class works.
+     *
      * @return
      */
     @Override
     public weighted_graph getGraph() {
-        return null;
+        return this.g;
     }
 
     /**
      * Compute a deep copy of this weighted graph.
+     *
      * @return
      */
     @Override
@@ -48,6 +57,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     /**
      * Returns true if and only if (iff) there is a valid path from EVREY node to each
      * other node. NOTE: assume ubdirectional graph.
+     *
      * @return
      */
     @Override
@@ -58,7 +68,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     /**
      * returns the length of the shortest path between src to dest
      * Note: if no such path --> returns -1
-     * @param src - start node
+     *
+     * @param src  - start node
      * @param dest - end (target) node
      * @return
      */
@@ -72,7 +83,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      * src--> n1-->n2-->...dest
      * see: https://en.wikipedia.org/wiki/Shortest_path_problem
      * Note if no such path --> returns null;
-     * @param src - start node
+     *
+     * @param src  - start node
      * @param dest - end (target) node
      * @return
      */
@@ -84,6 +96,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     /**
      * Saves this weighted (undirected) graph to the given
      * file name
+     *
      * @param file - the file name (may include a relative path).
      * @return true - iff the file was successfully saved
      */
@@ -97,6 +110,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      * if the file was successfully loaded - the underlying graph
      * of this class will be changed (to the loaded one), in case the
      * graph was not loaded the original graph should remain "as is".
+     *
      * @param file - file name
      * @return true - iff the graph was successfully loaded.
      */

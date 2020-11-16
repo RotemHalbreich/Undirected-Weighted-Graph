@@ -132,7 +132,9 @@ public class WGraph_DS implements weighted_graph {
         // if(node1 == node2) return false;
         if (vertices.get(node1) == null || vertices.get(node2) == null) return false;
         if (edges.containsKey(node1) || edges.containsKey(node2)) {
-            if (edges.get(node2).get(node1) != null) return true;
+            if (edges.get(node1) != null && edges.get(node2) != null) {
+                if (edges.get(node2).get(node1) != null) return true;
+            }
         }
         return false;
     }
@@ -174,21 +176,33 @@ public class WGraph_DS implements weighted_graph {
     @Override
     public void connect(int node1, int node2, double w) {
 
-        HashMap<Integer, HashMap<Integer, Double>> hash = new HashMap<Integer, HashMap<Integer, Double>>();
-        HashMap<Integer, Double> subHush = new HashMap<Integer, Double>();
+        //HashMap<Integer, HashMap<Integer, Double>> hash = new HashMap<Integer, HashMap<Integer, Double>>();
         if (w < 0) return;
         if(getNode(node1) == null || getNode(node2) == null) return;
         if(node1==node2) return;
         if (!hasEdge(node1, node2)) {
-            subHush.put(node2, w);
-            edges.put(node1, subHush);
+            if(edges.get(node1) == null) {
+                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
+                hash.put(node2, w);
+                edges.put(node1, hash);
+            }
+            else edges.get(node1).put(node2, w);
+            if(edges.get(node2) == null) {
+                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
+                hash.put(node1, w);
+                edges.put(node2, hash);
+            }
+            else edges.get(node2).put(node1, w);
+            e_size++;
+            mc++;
         }
         else if (w != getEdge(node1, node2)) {
-           // subHush.put()
-            hash.get(node1).put(node2, w);
-
+            edges.get(node1).put(node2, w);
+            edges.get(node2).put(node1, w);
+            mc++;
         }
     }
+
 
     /**
      * This method return a pointer (shallow copy) for a
@@ -209,11 +223,12 @@ public class WGraph_DS implements weighted_graph {
      * @return Collection<node_info>
      */
     @Override
-    public Collection<node_info> getV(int node_id) { //<<<<<<<<<<<<<<<<<<<<
-        if (getNode(node_id) == null) return null;
-        List<node_info> list =new LinkedList<node_info>();
-        for(int n : edges.get(node_id).keySet()){
-            list.add(getNode(n));
+    public Collection<node_info> getV(int node_id) {
+        List<node_info> list = new LinkedList<node_info>();
+        if (getNode(node_id) != null) {
+            for (int n : edges.get(node_id).keySet()) {
+                list.add(getNode(n));
+            }
         }
         return list;
     }
@@ -226,8 +241,14 @@ public class WGraph_DS implements weighted_graph {
      * @param key
      */
     @Override
-    public node_info removeNode(int key) { //<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        return null;
+    public node_info removeNode(int key) {
+        if(vertices.get(key) == null) return null;
+        for(node_info n : this.getV(key)){
+            removeEdge(n.getKey(), key);
+        }
+        v_size--;
+        mc++;
+        return vertices.remove(key);
     }
 
     /**
@@ -237,8 +258,13 @@ public class WGraph_DS implements weighted_graph {
      * @param node2
      */
     @Override
-    public void removeEdge(int node1, int node2) {//<<<<<<<<<<<<<<<<<<<<<<<<<<
-
+    public void removeEdge(int node1, int node2) {
+        if(node1 == node2) return;
+        if(!hasEdge(node1, node2)) return;
+        edges.get(node1).remove(node2);
+        edges.get(node2).remove(node1);
+        e_size--;
+        mc++;
     }
 
     /** return the number of vertices (nodes) in the graph.
@@ -246,7 +272,7 @@ public class WGraph_DS implements weighted_graph {
      * @return
      */
     @Override
-    public int nodeSize() { //<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public int nodeSize() {
         return v_size;
     }
 
@@ -256,7 +282,7 @@ public class WGraph_DS implements weighted_graph {
      * @return
      */
     @Override
-    public int edgeSize() { //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public int edgeSize() {
         return e_size;
     }
 
@@ -266,7 +292,7 @@ public class WGraph_DS implements weighted_graph {
      * @return mc
      */
     @Override
-    public int getMC() {//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    public int getMC() {
         return mc;
     }
 
@@ -275,9 +301,9 @@ public class WGraph_DS implements weighted_graph {
         return "WGraph_DS{" +
                 "v_size = " + v_size +
                 ", e_size = " + e_size +
-                ", mc=" + mc +
-                ", vertices = " + vertices.keySet() +
-                ", edges = " + edges +
+                ", mc = " + mc +
+                ", v = " + vertices.keySet() +
+                ", e = " + edges.toString() +
                 '}';
     }
 }
