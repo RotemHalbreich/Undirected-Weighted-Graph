@@ -19,9 +19,11 @@ public class WGraph_Algo implements weighted_graph_algorithms {
 
     private static final String UNVISITED = "white", VISITED = "gray", END_ROUND = "black";
     private weighted_graph g;
+//    private HashMap<Integer, node_info> neighbors;
 
     public WGraph_Algo() {
         this.g = new WGraph_DS();
+//        this.neighbors = new HashMap<Integer, node_info>();
     }
 
     /**
@@ -111,7 +113,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
 //            if (current.getInfo().equals(UNVISITED)) {
 //                current.setInfo(VISITED);
 //            }
-//            Collection<node_info> current_Ni = current.getNi();
+//            Collection<node_info> current_Ni = current;
 //            // Sets this vertex's neighbors info to "VISITED"
 //            // and adds all the neighbors of this vertex to the Queue
 //            for (node_info neighbor : current_Ni) {
@@ -152,6 +154,88 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     public List<node_info> shortestPath(int src, int dest) {
         return null;
     }
+
+    /**
+     * sets tag to 0 and weight MAX_VALUE on all nodes
+     */
+//    private void zeroTagsMaxWeight(){
+//    Collection<node_info> nodes = g.getV();
+//        for (node_info node_info : nodes) {
+//        node_info.setTag(Integer.MAX_VALUE);
+//        //node_info.setWeight(Integer.MAX_VALUE);
+//        node_info.setInfo("");
+//    }
+//}
+
+    /**
+     * Dijkstra algorithm
+     * @param src
+     */
+//    private void dijkstra(int src){
+//        zeroTagsMaxWeight();
+//        ArrayList<node_info> vertices = new ArrayList<node_info>();
+//        vertices.add(g.getNode(src));
+//        vertices.get(0).setInfo(UNVISITED);
+//        while(!vertices.isEmpty()){
+//            node_info currNode = vertices.get(0);
+//            if(currNode.getInfo() == UNVISITED){
+//                currNode.setInfo(VISITED);
+//                vertices.remove(0);
+//                Collection<edge_data> edges = g.getEdge(currNode.getKey());
+//                for (edge_data edge_data : edges) {
+//                    node_info destNode = g.getNode(edge_data.getDest());
+//                    double dstNodeW = destNode.getTag();
+//                    double edge_dataW = edge_data.getWeight();
+//                    if(dstNodeW > currNode.getTag() + edge_dataW){
+//                        destNode.setTag(currNode.getTag()+edge_data.getWeight());
+//                        destNode.setInfo(currNode.getKey() + "");
+//                        if(destNode.getTag() == 0){
+//                            vertices.add(getIndex(vertices, destNode.getTag()),destNode);
+//                        }
+//                    }
+//                }
+//            }
+//            else{
+//                vertices.remove(0);
+//            }
+//        }
+//    }
+
+//    // Dijkstra:
+//    private void Dijkstra(WGraph_DS g, node_info start) {
+//        HashMap<node_info, Integer> totalCosts = new HashMap<>();
+//        HashMap<node_info, node_info> prevNodes = new HashMap<>();
+//        Queue<node_info> minPQ = new LinkedList<>();
+//        Set<node_info> visited = new Set<>();
+//
+//        totalCosts.put(start, 0);
+//        minPQ.add(start);
+//
+//        for (node_info vertex : g.getV()){
+//            if(vertex != start) {
+//                totalCosts.put(vertex, Integer.MAX_VALUE);
+//            }
+//        }
+//        while (!minPQ.isEmpty()) {
+//            node_info newSmallest = minPQ.poll();
+//
+//            for(node_info neighbor : newSmallest.neighbors) {
+//                if(!visited.contains(neighbor)) {
+//                    int altPath = totalCosts.get(newSmallest) + distance(newSmallest, neighbor);
+//                    if(altPath < totalCosts.get(neighbor)) {
+//                        totalCosts.put(neighbor, altPath);
+//                        prevNodes.put(neighbor, newSmallest);
+//                        minPQ.decreasePriority(neighbor, altPath);
+//                    }
+//                }
+//            }
+//        }
+//
+//        List<node_info> res = new List<node_info>();
+//        res.add(totalCosts);
+//        res.add(prevNodes);
+//        return res;
+//    }
 
     /**
      * Saves this weighted (undirected) graph to the given
