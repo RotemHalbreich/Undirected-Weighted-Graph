@@ -53,29 +53,14 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public weighted_graph copy() {
-//        weighted_graph ans = new WGraph_DS();
-//        Iterator<node_info> point = g.getV().iterator();
-//        node_info current;
-//        int key;
-//        String info;
-//        double tag;
-//        while (point.hasNext()) {
-//            current = point.next();
-//            key = current.getKey();
-//            info = current.getInfo();
-//            tag = current.getTag();
-//            node_info vertices = new NodeData(key, info, tag);
-//            ans.addNode(vertices);
-//        }
-//        for (node_info current_V : g.getV()) {
-//            if (current_V.getNi() != null) {
-//                for (node_info current_Ni : current_V.getNi()) {
-//                    ans.connect(current_V.getKey(), current_Ni.getKey());
-//                }
-//            }
-//        }
-//        return ans;
-        return null;
+        weighted_graph ans = new WGraph_DS();
+        for (node_info n : g.getV()) {
+            ans.addNode(n.getKey());
+            for(node_info ni:g.getV(n.getKey())){
+                ans.connect(n.getKey(),ni.getKey(),g.getEdge(n.getKey(),ni.getKey()));
+            }
+        }
+        return ans;
     }
 
     /**
@@ -86,44 +71,44 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean isConnected() {
-//        if (g.nodeSize() <= 1) return true;
-//        node_info iter = this.g.getV().iterator().next();
-//        BFSisConnected(iter);
-//        // For every node, if the info isn't "END_ROUND"
-//        // we can determine the graph isn't connected
-//        for (node_info node : this.g.getV()) {
-//            if (!node.getInfo().equals(END_ROUND))
-//                return false;
-//        }
-//        return true;
-//    }
-//
-//    // Help function for isConnected:
-//    private boolean BFSisConnected(node_info start) {
-//        Queue<node_info> queue = new LinkedList<>();
-//        queue.add(start);
-//
-//        // Sets every node's info as "UNVISITED"
-//        for (node_info vertices : g.getV()) {
-//            vertices.setInfo(UNVISITED);
-//        }
-//        // For every new vertex in the queue, we set it's info from "UNVISITED" to "VISITED"
-//        while (!queue.isEmpty()) {
-//            node_info current = queue.poll();
-//            if (current.getInfo().equals(UNVISITED)) {
-//                current.setInfo(VISITED);
-//            }
-//            Collection<node_info> current_Ni = current;
-//            // Sets this vertex's neighbors info to "VISITED"
-//            // and adds all the neighbors of this vertex to the Queue
-//            for (node_info neighbor : current_Ni) {
-//                if (neighbor.getInfo().equals(UNVISITED)) {
-//                    neighbor.setInfo(VISITED);
-//                    queue.add(neighbor);
-//                }
-//            }
-//            current.setInfo(END_ROUND);
-//        }
+        if (g.nodeSize() <= 1) return true;
+        node_info iter = this.g.getV().iterator().next();
+        BFSisConnected(iter);
+        // For every node, if the info isn't "END_ROUND"
+        // we can determine the graph isn't connected
+        for (node_info node : this.g.getV()) {
+            if (!node.getInfo().equals(END_ROUND))
+                return false;
+        }
+        return true;
+    }
+
+    // Help function for isConnected:
+    private boolean BFSisConnected(node_info start) {
+        Queue<node_info> queue = new LinkedList<>();
+        queue.add(start);
+
+        // Sets every node's info as "UNVISITED"
+        for (node_info vertices : g.getV()) {
+            vertices.setInfo(UNVISITED);
+        }
+        // For every new vertex in the queue, we set it's info from "UNVISITED" to "VISITED"
+        while (!queue.isEmpty()) {
+            node_info current = queue.poll();
+            if (current.getInfo().equals(UNVISITED)) {
+                current.setInfo(VISITED);
+            }
+            Collection<node_info> current_Ni = g.getV(current.getKey());
+            // Sets this vertex's neighbors info to "VISITED"
+            // and adds all the neighbors of this vertex to the Queue
+            for (node_info neighbor : current_Ni) {
+                if (neighbor.getInfo().equals(UNVISITED)) {
+                    neighbor.setInfo(VISITED);
+                    queue.add(neighbor);
+                }
+            }
+            current.setInfo(END_ROUND);
+        }
         return true;
     }
 
@@ -201,7 +186,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
 //        }
 //    }
 
-//    // Dijkstra:
+////    // Dijkstra:
 //    private void Dijkstra(WGraph_DS g, node_info start) {
 //        HashMap<node_info, Integer> totalCosts = new HashMap<>();
 //        HashMap<node_info, node_info> prevNodes = new HashMap<>();

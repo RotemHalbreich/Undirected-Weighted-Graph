@@ -88,29 +88,44 @@ public class GraphTest {
         g.connect(1,2,2.0);
         g.connect(2,3,5.0);
         g.connect(2,3,7.0);
-        System.out.println("supposed 7.0: "+g.getEdge(3,2));
-        System.out.println("true: " +g.hasEdge(1,2));
-        System.out.println("true: " +g.hasEdge(2,1));
-        System.out.println("false: " +g.hasEdge(2,2));
-        System.out.println("false: " +g.hasEdge(3,1));
+//        System.out.println("supposed 7.0: "+g.getEdge(3,2));
+//        System.out.println("true: " +g.hasEdge(1,2));
+//        System.out.println("true: " +g.hasEdge(2,1));
+//        System.out.println("false: " +g.hasEdge(2,2));
+//        System.out.println("false: " +g.hasEdge(3,1));
 
-        System.out.println(g.getV().toString());
-        System.out.println(g.getV(1).toString());
-        System.out.println(g.getV(2).toString());
-        System.out.println(g.getV(0).toString());
-
-        System.out.println(g.toString());
-//        g.removeEdge(1,2);
-//        g.removeEdge(1,100);
-
-        g.removeNode(1);
-//        g.connect(2,3,5.0);
-//        g.connect(3,1,7.0);
-//        g.connect(1,3,7.0);
-//        g.connect(2,1,7.0);
-//        g.connect(3,1,7.0);
-        System.out.println(g.toString());
-         int n = 2;
+        weighted_graph_algorithms g1 = new WGraph_Algo();
+        weighted_graph g2=new WGraph_DS();
+        g1.init(g);
+        System.out.println("g :\n"+g.toString());
+//        g2=g1.copy();
+//        System.out.println("g  "+g.toString());
+//        System.out.println("g2  "+g2.toString());
+//        System.out.println("boolean "+g2.toString().equals(g.toString()));
+//        System.out.println("isConnected? TRUE: " + g1.isConnected());
+//
+//        g.removeEdge(2,3);
+//        System.out.println("isConnected? FALSE: " + g1.isConnected());
+//
+//        System.out.println();
+//
+//        System.out.println(g.getV().toString());
+//        System.out.println(g.getV(1).toString());
+//        System.out.println(g.getV(2).toString());
+//        System.out.println(g.getV(0).toString());
+//
+//        System.out.println(g.toString());
+////        g.removeEdge(1,2);
+////        g.removeEdge(1,100);
+//
+//        g.removeNode(1);
+////        g.connect(2,3,5.0);
+////        g.connect(3,1,7.0);
+////        g.connect(1,3,7.0);
+////        g.connect(2,1,7.0);
+////        g.connect(3,1,7.0);
+//        System.out.println(g.toString());
+//         int n = 2;
 
     }
 }

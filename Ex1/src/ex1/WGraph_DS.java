@@ -28,7 +28,6 @@ public class WGraph_DS implements weighted_graph {
 
     /**
      * This sub class represents the info of the graph's vertices
-     *
      */
 
     private class NodeInfo implements node_info {
@@ -55,6 +54,7 @@ public class WGraph_DS implements weighted_graph {
         /**
          * Return the key (id) associated with this node.
          * Note: each node_data should have a unique key.
+         *
          * @return
          */
         @Override
@@ -64,6 +64,7 @@ public class WGraph_DS implements weighted_graph {
 
         /**
          * return the remark (meta data) associated with this node.
+         *
          * @return
          */
         @Override
@@ -73,6 +74,7 @@ public class WGraph_DS implements weighted_graph {
 
         /**
          * Allows changing the remark (meta data) associated with this node.
+         *
          * @param s
          */
         @Override
@@ -83,6 +85,7 @@ public class WGraph_DS implements weighted_graph {
         /**
          * Temporal data (aka distance, color, or state)
          * which can be used be algorithms
+         *
          * @return
          */
         @Override
@@ -93,6 +96,7 @@ public class WGraph_DS implements weighted_graph {
         /**
          * Allow setting the "tag" value for temporal marking an node - common
          * practice for marking by algorithms.
+         *
          * @param t - the new value of the tag
          */
         @Override
@@ -108,6 +112,7 @@ public class WGraph_DS implements weighted_graph {
 
     /**
      * return the node_data by the node_id,
+     *
      * @param key - the node_id
      * @return the node_data by the node_id, null if none.
      */
@@ -119,13 +124,14 @@ public class WGraph_DS implements weighted_graph {
     /**
      * return true iff (if and only if) there is an edge between node1 and node2
      * Note: this method should run in O(1) time.
+     *
      * @param node1
      * @param node2
      * @return
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
-        if(getNode(node1) == getNode(node2)) return false;
+        if (getNode(node1) == getNode(node2)) return false;
         if (getNode(node1) == null || getNode(node2) == null) return false;
         if (edges.containsKey(node1) || edges.containsKey(node2)) {
             if (edges.get(node1) != null && edges.get(node2) != null) {
@@ -139,13 +145,14 @@ public class WGraph_DS implements weighted_graph {
      * return the weight if the edge (node1, node1). In case
      * there is no such edge - should return -1
      * Note: this method should run in O(1) time.
+     *
      * @param node1
      * @param node2
      * @return
      */
     @Override
     public double getEdge(int node1, int node2) {
-        if(getNode(node1) == getNode(node2)) return 0;
+        if (getNode(node1) == getNode(node2)) return 0;
         if (!hasEdge(node1, node2)) return -1;
         return edges.get(node1).get(node2).doubleValue();
     }
@@ -154,6 +161,7 @@ public class WGraph_DS implements weighted_graph {
      * add a new node to the graph with the given key.
      * Note: this method should run in O(1) time.
      * Note2: if there is already a node with such a key -> no action should be performed.
+     *
      * @param key
      */
     @Override
@@ -175,8 +183,8 @@ public class WGraph_DS implements weighted_graph {
 
         //HashMap<Integer, HashMap<Integer, Double>> hash = new HashMap<Integer, HashMap<Integer, Double>>();
         if (w < 0) return;
-        if(getNode(node1) == null || getNode(node2) == null) return;
-        if(getNode(node1) == getNode(node2)) return;
+        if (getNode(node1) == null || getNode(node2) == null) return;
+        if (getNode(node1) == getNode(node2)) return;
         if (!hasEdge(node1, node2)) {
             connectDirection(node1, node2, w);
             connectDirection(node2, node1, w);
@@ -194,8 +202,7 @@ public class WGraph_DS implements weighted_graph {
 //            else edges.get(node2).put(node1, w);
             e_size++;
             mc++;
-        }
-        else if (w != getEdge(node1, node2)) {
+        } else if (w != getEdge(node1, node2)) {
             edges.get(node1).put(node2, w);
             edges.get(node2).put(node1, w);
             mc++;
@@ -208,14 +215,14 @@ public class WGraph_DS implements weighted_graph {
             HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
             hash.put(node2, w);
             edges.put(node1, hash);
-        }
-        else edges.get(node1).put(node2, w);
+        } else edges.get(node1).put(node2, w);
     }
 
     /**
      * This method return a pointer (shallow copy) for a
      * Collection representing all the nodes in the graph.
      * Note: this method should run in O(1) tim
+     *
      * @return Collection<node_data>
      */
     @Override
@@ -224,10 +231,10 @@ public class WGraph_DS implements weighted_graph {
     }
 
     /**
-     *
      * This method returns a Collection containing all the
      * nodes connected to node_id
      * Note: this method can run in O(k) time, k - being the degree of node_id.
+     *
      * @return Collection<node_info>
      */
     @Override
@@ -245,13 +252,14 @@ public class WGraph_DS implements weighted_graph {
      * Delete the node (with the given ID) from the graph -
      * and removes all edges which starts or ends at this node.
      * This method should run in O(n), |V|=n, as all the edges should be removed.
-     * @return the data of the removed node (null if none).
+     *
      * @param key
+     * @return the data of the removed node (null if none).
      */
     @Override
     public node_info removeNode(int key) {
-        if(getNode(key) == null) return null;
-        for(node_info n : this.getV(key)){
+        if (getNode(key) == null) return null;
+        for (node_info n : this.getV(key)) {
             removeEdge(n.getKey(), key);
         }
         v_size--;
@@ -262,21 +270,24 @@ public class WGraph_DS implements weighted_graph {
     /**
      * Delete the edge from the graph,
      * Note: this method should run in O(1) time.
+     *
      * @param node1
      * @param node2
      */
     @Override
     public void removeEdge(int node1, int node2) {
-        if(node1 == node2) return;
-        if(!hasEdge(node1, node2)) return;
+        if (node1 == node2) return;
+        if (!hasEdge(node1, node2)) return;
         edges.get(node1).remove(node2);
         edges.get(node2).remove(node1);
         e_size--;
         mc++;
     }
 
-    /** return the number of vertices (nodes) in the graph.
+    /**
+     * return the number of vertices (nodes) in the graph.
      * Note: this method should run in O(1) time.
+     *
      * @return
      */
     @Override
@@ -287,6 +298,7 @@ public class WGraph_DS implements weighted_graph {
     /**
      * return the number of edges (undirectional graph).
      * Note: this method should run in O(1) time.
+     *
      * @return
      */
     @Override
@@ -297,6 +309,7 @@ public class WGraph_DS implements weighted_graph {
     /**
      * Returns the Mode Count - for testing changes in the graph.
      * Any change in the inner state of the graph should cause an increment in the ModeCount
+     *
      * @return mc
      */
     @Override
@@ -306,8 +319,18 @@ public class WGraph_DS implements weighted_graph {
 
     @Override
     public String toString() {
+        LinkedList<String> edges = new LinkedList<>();
         String s_V = "Ver: " + vertices.keySet();
-        String s_E = "\nEdg: " + edges;
-        return  s_V + s_E;
+        // String s_E = "\nEdg: " + edges;
+        String s_E = "\nEdg: ";
+        for (node_info n : getV()) {
+            for (node_info ni : getV(n.getKey())) {
+
+                s_E = "{" + n.getKey() + "," + ni.getKey() + ";" + getEdge(n.getKey(), ni.getKey()) + "}";
+                edges.add(s_E);
+
+            }
+        }
+        return s_V + "\n" + edges.toString();
     }
 }
