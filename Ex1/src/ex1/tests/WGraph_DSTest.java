@@ -1,8 +1,6 @@
-package ex1;
+package ex1.tests;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
 class WGraph_DSTest {
 

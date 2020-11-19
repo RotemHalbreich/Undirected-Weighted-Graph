@@ -1,7 +1,4 @@
-package ex1;
-
-import java.util.HashMap;
-import java.util.HashSet;
+package ex1.src;
 
 public class GraphTest {
     public static void main(String[] args) {
@@ -77,17 +74,17 @@ public class GraphTest {
 //
 //
 //        weighted_graph g = new WGraph_DS();
-        for(int i=0;i<10;i++){
-            g.addNode(i);
-        }
-        for(int i=1;i<10;i++)g.connect(i-1,i,i);
-        g.addNode(1);
-        g.addNode(2);
-        g.addNode(3);
-
-        g.connect(1,2,2.0);
-        g.connect(2,3,5.0);
-        g.connect(2,3,7.0);
+//        for(int i=0;i<10;i++){
+//            g.addNode(i);
+//        }
+//        for(int i=1;i<10;i++)g.connect(i-1,i,i);
+//        g.addNode(1);
+//        g.addNode(2);
+//        g.addNode(3);
+//
+//        g.connect(1,2,2.0);
+//        g.connect(2,3,5.0);
+//        g.connect(2,3,7.0);
 //        System.out.println("supposed 7.0: "+g.getEdge(3,2));
 //        System.out.println("true: " +g.hasEdge(1,2));
 //        System.out.println("true: " +g.hasEdge(2,1));
@@ -95,9 +92,36 @@ public class GraphTest {
 //        System.out.println("false: " +g.hasEdge(3,1));
 
         weighted_graph_algorithms g1 = new WGraph_Algo();
-        weighted_graph g2=new WGraph_DS();
+//        weighted_graph g2=new WGraph_DS();
+
+        for (int i = 0; i < 8; i++) {
+            g.addNode(i);
+        }
+        g.connect(0,1,5.0);
+        g.connect(0,2,1.0);
+        g.connect(0,3,6.0);
+        g.connect(1,2,3.0);
+        g.connect(2,3,10.0);
+        g.connect(1,4,2.0);
+        g.connect(2,5,1.0);
+        g.connect(3,6,3.0);
+        g.connect(4,5,4.0);
+        g.connect(5,6,3.0);
+
         g1.init(g);
-        System.out.println("g :\n"+g.toString());
+        System.out.println(g1.shortestPath(3,1).toString());
+        System.out.println(g1.shortestPathDist(0,5));
+
+        for (int i = 0; i < 4; i++) {
+            g.removeEdge(0, i);
+        }
+        System.out.println(g1.shortestPathDist(1,5));
+        g.removeEdge(1,4);
+        g.removeEdge(1,2);
+        System.out.println(g1.shortestPathDist(1,5));
+
+
+//        System.out.println("g :\n"+g.toString());
 //        g2=g1.copy();
 //        System.out.println("g  "+g.toString());
 //        System.out.println("g2  "+g2.toString());
@@ -127,5 +151,6 @@ public class GraphTest {
 //        System.out.println(g.toString());
 //         int n = 2;
 
+    //    System.out.println(g1.shortestPathDist(0,1));
     }
 }
