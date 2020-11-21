@@ -1,9 +1,9 @@
 # Ex1:
 
-Object Oriented Programming (Ariel University - Computer science department):
+## Object Oriented Programming (Ariel University - Computer science department):
 
-## This project deals with the subject of "Graph Theory" focusing on undirectional weighted graph.
-## The project assembeled of 3 different classes implemented from 3 different interfaces:
+### This project deals with the subject of "Graph Theory" focusing on undirectional weighted graph.
+#### The project assembeled of 3 different classes implemented from 3 different interfaces:
 
 
 1.	NodeInfo:
