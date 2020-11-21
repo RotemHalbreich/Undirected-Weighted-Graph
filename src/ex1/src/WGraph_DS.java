@@ -1,5 +1,6 @@
 package ex1.src;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -11,7 +12,7 @@ import java.util.*;
  * @author Rotem Halbreich
  */
 
-public class WGraph_DS implements weighted_graph {
+public class WGraph_DS implements weighted_graph, Serializable {
 
     private int v_size = 0;
     private int e_size = 0;
@@ -30,7 +31,7 @@ public class WGraph_DS implements weighted_graph {
      * This sub class represents the info of the graph's vertices
      */
 
-    private class NodeInfo implements node_info, Comparable<node_info>, java.io.Serializable {
+    private class NodeInfo implements node_info, Comparable<node_info>, Serializable {
 
         private int key;
         private String info;
@@ -124,7 +125,9 @@ public class WGraph_DS implements weighted_graph {
      */
     @Override
     public node_info getNode(int key) {
+
         return vertices.get(key);
+
     }
 
     /**
@@ -246,8 +249,8 @@ public class WGraph_DS implements weighted_graph {
     @Override
     public Collection<node_info> getV(int node_id) {
         List<node_info> list = new LinkedList<node_info>();
-        if (getNode(node_id) != null) {
-            for (int n : edges.get(node_id).keySet()) {
+        if (edges.get(node_id) != null) {
+            for (Integer n : edges.get(node_id).keySet()) {
                 list.add(getNode(n));
             }
         }

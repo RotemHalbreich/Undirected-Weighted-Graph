@@ -5,6 +5,7 @@ public class GraphTest {
 
 
         weighted_graph g = new WGraph_DS();
+        weighted_graph_algorithms g1 = new WGraph_Algo();
 //        g.addNode(0);
 //        System.out.println(g.getNode(0).toString());
 
@@ -91,7 +92,7 @@ public class GraphTest {
 //        System.out.println("false: " +g.hasEdge(2,2));
 //        System.out.println("false: " +g.hasEdge(3,1));
 
-        weighted_graph_algorithms g1 = new WGraph_Algo();
+
 //        weighted_graph g2=new WGraph_DS();
 
         for (int i = 0; i < 8; i++) {
@@ -107,43 +108,50 @@ public class GraphTest {
         g.connect(3,6,3.0);
         g.connect(4,5,4.0);
         g.connect(5,6,3.0);
-
         g1.init(g);
-        System.out.println(g1.shortestPath(3,1).toString());
-        System.out.println(g1.shortestPathDist(0,5));
+        weighted_graph_algorithms text=new WGraph_Algo();
+        g1.save("test.txt");
 
-        for (int i = 0; i < 4; i++) {
-            g.removeEdge(0, i);
-        }
-        System.out.println(g1.shortestPathDist(1,5));
-        g.removeEdge(1,4);
-        g.removeEdge(1,2);
-        System.out.println(g1.shortestPathDist(1,5));
+        text.load("test.txt");
+        weighted_graph gg=new WGraph_DS();
+        gg=text.copy();
 
-
-//        System.out.println("g :\n"+g.toString());
-//        g2=g1.copy();
-//        System.out.println("g  "+g.toString());
-//        System.out.println("g2  "+g2.toString());
-//        System.out.println("boolean "+g2.toString().equals(g.toString()));
-//        System.out.println("isConnected? TRUE: " + g1.isConnected());
+        System.out.println("big dick\n"+gg.toString());
+//        System.out.println(g1.shortestPath(3,1).toString());
+//        System.out.println(g1.shortestPathDist(0,5));
 //
-//        g.removeEdge(2,3);
-//        System.out.println("isConnected? FALSE: " + g1.isConnected());
+//        for (int i = 0; i < 4; i++) {
+//            g.removeEdge(0, i);
+//        }
+//        System.out.println(g1.shortestPathDist(1,5));
+//        g.removeEdge(1,4);
+//        g.removeEdge(1,2);
+//        System.out.println(g1.shortestPathDist(1,5));
 //
-//        System.out.println();
 //
-//        System.out.println(g.getV().toString());
-//        System.out.println(g.getV(1).toString());
-//        System.out.println(g.getV(2).toString());
-//        System.out.println(g.getV(0).toString());
-//
-//        System.out.println(g.toString());
-////        g.removeEdge(1,2);
-////        g.removeEdge(1,100);
-//
-//        g.removeNode(1);
-////        g.connect(2,3,5.0);
+////        System.out.println("g :\n"+g.toString());
+////        g2=g1.copy();
+////        System.out.println("g  "+g.toString());
+////        System.out.println("g2  "+g2.toString());
+////        System.out.println("boolean "+g2.toString().equals(g.toString()));
+////        System.out.println("isConnected? TRUE: " + g1.isConnected());
+////
+////        g.removeEdge(2,3);
+////        System.out.println("isConnected? FALSE: " + g1.isConnected());
+////
+////        System.out.println();
+////
+////        System.out.println(g.getV().toString());
+////        System.out.println(g.getV(1).toString());
+////        System.out.println(g.getV(2).toString());
+////        System.out.println(g.getV(0).toString());
+////
+////        System.out.println(g.toString());
+//////        g.removeEdge(1,2);
+//////        g.removeEdge(1,100);
+////
+////        g.removeNode(1);
+//////        g.connect(2,3,5.0);
 ////        g.connect(3,1,7.0);
 ////        g.connect(1,3,7.0);
 ////        g.connect(2,1,7.0);

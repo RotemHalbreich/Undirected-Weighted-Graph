@@ -16,7 +16,7 @@ import java.util.*;
  * @author Rotem Halbreich
  */
 
-public class WGraph_Algo implements weighted_graph_algorithms, java.io.Serializable {
+public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
 
     private static final String UNVISITED = "white", VISITED = "gray", END_ROUND = "black";
     private weighted_graph g;
