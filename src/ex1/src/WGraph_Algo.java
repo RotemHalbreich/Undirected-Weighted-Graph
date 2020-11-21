@@ -1,5 +1,6 @@
 package ex1.src;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -15,10 +16,11 @@ import java.util.*;
  * @author Rotem Halbreich
  */
 
-public class WGraph_Algo implements weighted_graph_algorithms {
+public class WGraph_Algo implements weighted_graph_algorithms, java.io.Serializable {
 
     private static final String UNVISITED = "white", VISITED = "gray", END_ROUND = "black";
     private weighted_graph g;
+    private static int count = 0;
 
     public WGraph_Algo() {
         this.g = new WGraph_DS();
@@ -31,7 +33,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public void init(weighted_graph g) {
-        this.g = g;
+        if (g != null) {
+            this.g = g;
+        }
     }
 
     /**
@@ -70,8 +74,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     @Override
     public boolean isConnected() {
         if (g.nodeSize() <= 1) return true;
+        if(g.edgeSize() < g.nodeSize() - 1) return false;
         node_info iter = this.g.getV().iterator().next();
-        BFSisConnected(iter);
+        BFS(iter);
         // For every node, if the info isn't "END_ROUND"
         // we can determine the graph isn't connected
         for (node_info node : this.g.getV()) {
@@ -82,7 +87,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     // Help function for isConnected:
-    private boolean BFSisConnected(node_info start) {
+    private boolean BFS(node_info start) {
         Queue<node_info> queue = new LinkedList<>();
         queue.add(start);
 
@@ -148,7 +153,6 @@ public class WGraph_Algo implements weighted_graph_algorithms {
             }
             l.add(n);
             dest = n.getKey();
-            int dickInAss = 0;
         }
         return l;
     }
@@ -187,7 +191,6 @@ public class WGraph_Algo implements weighted_graph_algorithms {
                     minPQ.add(neighbor);
                     prevNodes.put(neighbor.getKey(), newSmallest);
                 }
-
             }
             newSmallest.setInfo(VISITED);
         }
@@ -203,7 +206,18 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean save(String file) {
-        return false;
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(this.g);
+            fileOutputStream.close();
+            objectOutputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -217,6 +231,19 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean load(String file) {
-        return false;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            this.g = (weighted_graph) objectInputStream.readObject();
+            System.out.println(count);
+            count++;
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println(count);
+            return false;
+        }
+        return true;
     }
 }
+

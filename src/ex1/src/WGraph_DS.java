@@ -30,7 +30,7 @@ public class WGraph_DS implements weighted_graph {
      * This sub class represents the info of the graph's vertices
      */
 
-    private class NodeInfo implements node_info, Comparable<node_info> {
+    private class NodeInfo implements node_info, Comparable<node_info>, java.io.Serializable {
 
         private int key;
         private String info;
@@ -321,6 +321,29 @@ public class WGraph_DS implements weighted_graph {
     @Override
     public int getMC() {
         return mc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WGraph_DS g = (WGraph_DS) o;
+        boolean flag = false;
+        if (v_size == g.v_size && e_size == g.e_size) {
+            flag = true;
+            for (int n : vertices.keySet()) {
+                for (node_info Ni : getV(n)) {
+                    if (getEdge(n, Ni.getKey()) != ((WGraph_DS) o).getEdge(n, Ni.getKey()))
+                        return false;
+                }
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(v_size, e_size, mc, vertices, edges);
     }
 
     @Override
