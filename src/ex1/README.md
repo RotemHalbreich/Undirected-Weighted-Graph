@@ -6,7 +6,6 @@
 #### The project assembeled of 3 different classes implemented from 3 different interfaces:
 
 ------------------------------------------------------------------------------------------
-
 ### NodeInfo:
 ------------------------------------------------------------------------------------------
 An inner private class representing the graph's vertices:
@@ -18,7 +17,7 @@ Including methods:
 - setTag() - Set the tag of a vertex.
 - compareTo() - A function for tags comparison (weight).
 
-
+------------------------------------------------------------------------------------------
 ### WGraph_DS:
 ------------------------------------------------------------------------------------------
 Represents a graph assembeled of vertices:
@@ -41,6 +40,7 @@ Including methods:
 - edgeSize() - returns the number of edges in the graph.
 - getMC() - returns the number of changes made to the graph.
 
+------------------------------------------------------------------------------------------
 ### WGraph_Algo: 
 ------------------------------------------------------------------------------------------
 Represents the algorithms we apply on the graph:
