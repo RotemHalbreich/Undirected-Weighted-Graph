@@ -1,4 +1,4 @@
-# Ex1:
+# Assignment Ex1:
 
 ## Object Oriented Programming (Ariel University - Computer science department):
 
@@ -28,29 +28,29 @@
   	the weight of the edge between them, using HashMap inside HashMap.
 	
 	Including methods:
-	A. getNode() - Get a vertex by a unique key.
-	B. hasEdge() - Check if there's an edge between two vertices.
-	C. getEdge() - Gets an edge between two vertices represented by weight.
-	D. addNode() - Adds a vertex to the graph.
-	E. connect() - Connect between two vertices.
-	F. getV() - Get the neighbors of the vertex as a collection.
-	G. getV(node_id) - Get the value of the graph's vertices as a collection.
- 	H. removeNode() - Removes a vertex from the graph.
-	I. removeEdge() - Removes an edge from the graph.
-  	J. nodeSize() - returns the number of vetices in the graph.
- 	K. edgeSize() - returns the number of edges in the graph.
-	L. getMC() - returns the number of changes made to the graph.
+	- getNode() - Get a vertex by a unique key.
+	- hasEdge() - Check if there's an edge between two vertices.
+	- getEdge() - Gets an edge between two vertices represented by weight.
+	- addNode() - Adds a vertex to the graph.
+	- connect() - Connect between two vertices.
+	- getV() - Get the neighbors of the vertex as a collection.
+	- getV(node_id) - Get the value of the graph's vertices as a collection.
+ 	- removeNode() - Removes a vertex from the graph.
+	- removeEdge() - Removes an edge from the graph.
+  	- nodeSize() - returns the number of vetices in the graph.
+ 	- edgeSize() - returns the number of edges in the graph.
+	- getMC() - returns the number of changes made to the graph.
 
 3.  WGraph_Algo: 
 ------------------------------------------------------------------------------------------
 	Represents the algorithms we apply on the graph:
  	In this class I use mostly Dijkstra & BFS algorithms for implementing the algorithms below:
 	
-	A. init() - Initializes the graph.
-	B. getGraph() - Returns an undirectional weighted graph.
-	C. copy() - Computes a deep copy of the graph.
-	D. isConnected() - Checks if all the vertices of the graph are connected by edges.
-	E. shortestPathDist() - Returns the shortest path distance between two vertices of the graph (minimum weight). 
-	F. shortestPath() - Returns the shortest path route between two vertices of the graph (minimum weight).
-  	G. save() - Saves a graph to a file.
- 	H. load() - Loads a graph from a file.
+	- init() - Initializes the graph.
+	- getGraph() - Returns an undirectional weighted graph.
+	- copy() - Computes a deep copy of the graph.
+	- isConnected() - Checks if all the vertices of the graph are connected by edges.
+	- shortestPathDist() - Returns the shortest path distance between two vertices of the graph (minimum weight). 
+	- shortestPath() - Returns the shortest path route between two vertices of the graph (minimum weight).
+  	- save() - Saves a graph to a file.
+ 	- load() - Loads a graph from a file.
