@@ -43,7 +43,7 @@ Including methods:
 ------------------------------------------------------------------------------------------
 ### WGraph_Algo: 
 ------------------------------------------------------------------------------------------
-Represents the algorithms we apply on the graph, 
+Represents the algorithms we apply on the graph. 
 In this class I use Dijkstra & BFS algorithms for implementing the algorithms below:
 	
 - init() - Initializes the graph.
