@@ -4,14 +4,15 @@ import java.io.*;
 import java.util.*;
 
 /**
- * This interface represents an Undirected (positive) Weighted Graph Theory algorithms including:
- * 0. clone(); (copy)
- * 1. init(graph);
- * 2. isConnected();
- * 3. double shortestPathDist(int ex1.ex1.src, int dest);
- * 4. List<node_data> shortestPath(int ex1.ex1.src, int dest);
- * 5. Save(file);
- * 6. Load(file);
+ * This class represents an Undirected (positive) Weighted "Graph Theory" algorithms including methods:
+ * 0. clone() - Deep copy of a graph
+ * 1. init(graph) - Initializes the graph
+ * 2. isConnected() - Checks if all the vertices are connected to each other by edges
+ * 3. double shortestPathDist(int src, int dest) - Checks the shortest path distance
+ * 4. List<node_data> shortestPath(int src, int dest) - Returns the vertices' shortest
+ * path route as an ordered LinkedList
+ * 5. Save(file) -
+ * 6. Load(file) -
  *
  * @author Rotem Halbreich
  */
@@ -49,7 +50,7 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
     }
 
     /**
-     * Compute a deep copy of this weighted graph.
+     * Computes a deep copy of this weighted graph.
      *
      * @return
      */
@@ -66,7 +67,7 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
     }
 
     /**
-     * Returns true if and only if (iff) there is a valid path from EVERY node to each
+     * Returns true if and only if (iff) there is a valid path from EVERY vertex to each
      * other node. NOTE: assume undirectional graph.
      *
      * @return
@@ -74,7 +75,7 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
     @Override
     public boolean isConnected() {
         if (g.nodeSize() <= 1) return true;
-        if(g.edgeSize() < g.nodeSize() - 1) return false;
+        if (g.edgeSize() < g.nodeSize() - 1) return false;
         node_info iter = this.g.getV().iterator().next();
         BFS(iter);
         // For every node, if the info isn't "END_ROUND"
@@ -116,8 +117,9 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
     }
 
     /**
-     * returns the length of the shortest path between ex1.ex1.src to dest
-     * Note: if no such path --> returns -1
+     * Returns the length of the shortest path between src & dest vertices
+     * If no such path --> returns -1
+     * If one of the vertices (src/dest) doesn't exist --> Throw RuntimeException
      *
      * @param src  - start node
      * @param dest - end (target) node
@@ -125,16 +127,19 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
      */
     @Override
     public double shortestPathDist(int src, int dest) {
+        if (g.getNode(src) == null || g.getNode(dest) == null) return -1;
         Dijkstra((WGraph_DS) g, g.getNode(src), dest);
-        if (g.getNode(dest).getTag() == Double.MAX_VALUE) return -1;
+        double a = g.getNode(dest).getTag();
+        if (g.getNode(dest).getTag() == Double.MAX_VALUE) g.getNode(dest).setTag(-1);
         return g.getNode(dest).getTag();
     }
 
     /**
-     * returns the the shortest path between ex1.ex1.src to dest - as an ordered List of nodes:
-     * ex1.ex1.src--> n1-->n2-->...dest
+     * returns the the shortest path between src to dest - as an ordered List of nodes:
+     * (src)--> (n1)--> (n2)--> ...-->(dest)
      * see: https://en.wikipedia.org/wiki/Shortest_path_problem
-     * Note if no such path --> returns null;
+     * If no such path --> returns null;
+     * If one of the vertices (src/dest) doesn't exist --> Throw RuntimeException
      *
      * @param src  - start node
      * @param dest - end (target) node
@@ -143,56 +148,60 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
     @Override
     public List<node_info> shortestPath(int src, int dest) {
         HashMap<Integer, node_info> hash = Dijkstra((WGraph_DS) g, g.getNode(src), dest);
+        if (g.getNode(src) == null || g.getNode(dest) == null) return null;
+        if (g.getNode(dest).getTag() == Double.MAX_VALUE) return null;
         boolean flag = true;
-        List<node_info> l = new ArrayList<>();
+        LinkedList<node_info> l = new LinkedList<>();
         l.add(g.getNode(dest));
+        if (src == dest) return l;
         while (flag) {
             node_info n = hash.get(dest);
             if (n.getKey() == src) {
                 flag = false;
             }
-            l.add(n);
+            l.addFirst(n);
             dest = n.getKey();
         }
         return l;
     }
 
     /**
-     * Dijkstra algorithm
+     * Dijkstra algorithm:
+     * If one of the vertices (src/dest) doesn't exist --> Throw RuntimeException
      *
      * @param
      */
 
     // Dijkstra algorithm help function:
-    private HashMap<Integer, node_info> Dijkstra(WGraph_DS g, node_info start, int dest) {
+    private HashMap<Integer, node_info> Dijkstra(WGraph_DS g, node_info src, int dest) {
         HashMap<Integer, node_info> prevNodes = new HashMap<>();
-        PriorityQueue<node_info> minPQ = new PriorityQueue<>();
+        PriorityQueue<node_info> PQ = new PriorityQueue<>();
+        if (g.getNode(dest) == null || src == null) throw new RuntimeException();
 
-        start.setTag(0.0);
-        start.setInfo(UNVISITED);
-        minPQ.add(start);
+        src.setTag(0.0);
+        src.setInfo(UNVISITED);
+        PQ.add(src);
 
         for (node_info vertex : g.getV()) {
-            if (vertex != start) {
+            if (vertex != src) {
                 vertex.setTag(Double.MAX_VALUE);
                 vertex.setInfo(UNVISITED);
             }
         }
-        while (!minPQ.isEmpty()) {
-            node_info newSmallest = minPQ.poll();
-            Collection<node_info> current_Ni = g.getV(newSmallest.getKey());
-            if (newSmallest.getKey() == dest || newSmallest.getTag() == Double.MAX_VALUE) return prevNodes;
+        while (!PQ.isEmpty()) {
+            node_info curr = PQ.poll();
+            Collection<node_info> current_Ni = g.getV(curr.getKey());
+            if (curr.getKey() == dest || curr.getTag() == Double.MAX_VALUE) return prevNodes;
             for (node_info neighbor : current_Ni) {
-
-                double currWeight = newSmallest.getTag() + g.getEdge(neighbor.getKey(), newSmallest.getKey());
+                double currWeight = curr.getTag() + g.getEdge(neighbor.getKey(), curr.getKey());
                 if (neighbor.getInfo().equals(UNVISITED) && currWeight < neighbor.getTag()) {
-                    minPQ.remove(neighbor);
+                    PQ.remove(neighbor);
                     neighbor.setTag(currWeight);
-                    minPQ.add(neighbor);
-                    prevNodes.put(neighbor.getKey(), newSmallest);
+                    PQ.add(neighbor);
+                    prevNodes.put(neighbor.getKey(), curr);
                 }
             }
-            newSmallest.setInfo(VISITED);
+            curr.setInfo(VISITED);
         }
         return prevNodes;
     }
@@ -244,6 +253,19 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WGraph_Algo that = (WGraph_Algo) o;
+        return g.equals(that.g);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(g);
     }
 }
 

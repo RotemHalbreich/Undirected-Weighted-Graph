@@ -53,10 +53,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Return the key (id) associated with this node.
-         * Note: each node_data should have a unique key.
-         *
-         * @return
+         * @return the unique key (id) associated with each vertex.
          */
         @Override
         public int getKey() {
@@ -64,9 +61,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * return the remark (meta data) associated with this node.
+         * return the info associated with this vertex.
          *
-         * @return
+         * @return info
          */
         @Override
         public String getInfo() {
@@ -74,9 +71,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Allows changing the remark (meta data) associated with this node.
+         * Sets the info of this vertex.
          *
-         * @param s
+         * @param s - the new value of the info
          */
         @Override
         public void setInfo(String s) {
@@ -84,10 +81,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Temporal data (aka distance, color, or state)
-         * which can be used be algorithms
+         * return the tag associated with this vertex.
          *
-         * @return
+         * @return tag
          */
         @Override
         public double getTag() {
@@ -95,8 +91,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
         }
 
         /**
-         * Allow setting the "tag" value for temporal marking an node - common
-         * practice for marking by algorithms.
+         * Allows setting the tag value for temporal marking a vertex.
          *
          * @param t - the new value of the tag
          */
@@ -105,6 +100,11 @@ public class WGraph_DS implements weighted_graph, Serializable {
             tag = t;
         }
 
+        /**
+         * Represents the vertex as a string.
+         *
+         * @return String
+         */
         @Override
         public String toString() {
             return "NodeInfo{" + "key = " + key + ", info = '" + info + '\'' + ", tag = " + tag + '}';
@@ -118,28 +118,27 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the node_data by the node_id,
+     * Returns the vertex by its unique key (ID).
      *
-     * @param key - the node_id
-     * @return the node_data by the node_id, null if none.
+     * @param key - vertex's ID
+     * @return Vertex's ID || null (if none)
      */
     @Override
     public node_info getNode(int key) {
-
+        if(vertices.get(key) == null) return null;
         return vertices.get(key);
-
     }
 
     /**
-     * return true iff (if and only if) there is an edge between node1 and node2
-     * Note: this method should run in O(1) time.
+     * Checks if there's an edge connecting two vertices.
      *
-     * @param node1
-     * @param node2
-     * @return
+     * @param node1 - first vertex
+     * @param node2 - second vertex
+     * @return boolean (true/false)
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
+        if(node1 == node2) return false;
         if (getNode(node1) == getNode(node2)) return false;
         if (getNode(node1) == null || getNode(node2) == null) return false;
         if (edges.containsKey(node1) || edges.containsKey(node2)) {
@@ -161,9 +160,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public double getEdge(int node1, int node2) {
-        if (getNode(node1) == getNode(node2)) return 0;
+        if (getNode(node1) == getNode(node2) || node1 == node2) return -1;
         if (!hasEdge(node1, node2)) return -1;
-        return edges.get(node1).get(node2).doubleValue();
+        return edges.get(node1).get(node2);
     }
 
     /**
@@ -189,26 +188,12 @@ public class WGraph_DS implements weighted_graph, Serializable {
      */
     @Override
     public void connect(int node1, int node2, double w) {
-
-        //HashMap<Integer, HashMap<Integer, Double>> hash = new HashMap<Integer, HashMap<Integer, Double>>();
         if (w < 0) return;
         if (getNode(node1) == null || getNode(node2) == null) return;
         if (getNode(node1) == getNode(node2)) return;
         if (!hasEdge(node1, node2)) {
             connectDirection(node1, node2, w);
             connectDirection(node2, node1, w);
-//            if(edges.get(node1) == null) {
-//                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
-//                hash.put(node2, w);
-//                edges.put(node1, hash);
-//            }
-//            else edges.get(node1).put(node2, w);
-//            if(edges.get(node2) == null) {
-//                HashMap<Integer, Double> hash = new HashMap<Integer, Double>();
-//                hash.put(node1, w);
-//                edges.put(node2, hash);
-//            }
-//            else edges.get(node2).put(node1, w);
             e_size++;
             mc++;
         } else if (w != getEdge(node1, node2)) {
@@ -332,11 +317,11 @@ public class WGraph_DS implements weighted_graph, Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         WGraph_DS g = (WGraph_DS) o;
         boolean flag = false;
-        if (v_size == g.v_size && e_size == g.e_size) {
+        if (e_size == g.e_size && v_size == g.v_size) {
             flag = true;
             for (int n : vertices.keySet()) {
-                for (node_info Ni : getV(n)) {
-                    if (getEdge(n, Ni.getKey()) != ((WGraph_DS) o).getEdge(n, Ni.getKey()))
+                for (node_info neighbors : getV(n)) {
+                    if (((WGraph_DS) o).getEdge(n, neighbors.getKey()) != getEdge(n, neighbors.getKey()))
                         return false;
                 }
             }
@@ -357,10 +342,8 @@ public class WGraph_DS implements weighted_graph, Serializable {
         String s_E = "\nEdg: ";
         for (node_info n : getV()) {
             for (node_info ni : getV(n.getKey())) {
-
                 s_E = "{" + n.getKey() + "," + ni.getKey() + ";" + getEdge(n.getKey(), ni.getKey()) + "}";
                 edges.add(s_E);
-
             }
         }
         return s_V + "\n" + edges.toString();

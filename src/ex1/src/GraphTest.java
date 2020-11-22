@@ -108,7 +108,9 @@ public class GraphTest {
         g.connect(3,6,3.0);
         g.connect(4,5,4.0);
         g.connect(5,6,3.0);
+        g.addNode(100);
         g1.init(g);
+        System.out.println(g1.shortestPath(0,100));
         weighted_graph_algorithms text=new WGraph_Algo();
         g1.save("test.txt");
 
@@ -116,7 +118,7 @@ public class GraphTest {
         weighted_graph gg=new WGraph_DS();
         gg=text.copy();
 
-        System.out.println("big dick\n"+gg.toString());
+        System.out.println("\n"+gg.toString());
 //        System.out.println(g1.shortestPath(3,1).toString());
 //        System.out.println(g1.shortestPathDist(0,5));
 //
