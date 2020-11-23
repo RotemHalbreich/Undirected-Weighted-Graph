@@ -11,8 +11,8 @@ import java.util.*;
  * 3. double shortestPathDist(int src, int dest) - Checks the shortest path distance
  * 4. List<node_data> shortestPath(int src, int dest) - Returns the vertices' shortest
  * path route as an ordered LinkedList
- * 5. Save(file) -
- * 6. Load(file) -
+ * 5. Save(file)
+ * 6. Load(file)
  *
  * @author Rotem Halbreich
  */
@@ -20,12 +20,17 @@ import java.util.*;
 public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
 
     private static final String UNVISITED = "white", VISITED = "gray", END_ROUND = "black";
-    private weighted_graph g;
+    public weighted_graph g;
     private static int count = 0;
 
-   // public WGraph_Algo(weighted_graph r) {
-     //   this.g = new WGraph_DS();
-   // }
+    public WGraph_Algo(weighted_graph g){
+        init(g);
+    }
+
+    public WGraph_Algo() {
+        this.g = new WGraph_DS();
+    }
+
 
     /**
      * Init the graph on which this set of algorithms operates on.

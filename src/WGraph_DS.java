@@ -182,9 +182,13 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Connect an edge between node1 and node2, with an edge with weight >=0.
-     * Note: this method should run in O(1) time.
-     * Note2: if the edge node1-node2 already exists - the method simply updates the weight of the edge.
+     * Connects between two vertices (with an edge with weight >= 0).
+     * First we check if both vertex are exist,
+     * if the first vertex has any neighbor at all,
+     * if there's only one vertex in the graph.
+     *
+     * @param node1 - first vertex
+     * @param node2 - second vertex
      */
     @Override
     public void connect(int node1, int node2, double w) {
@@ -213,11 +217,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * This method return a pointer (shallow copy) for a
-     * Collection representing all the nodes in the graph.
-     * Note: this method should run in O(1) tim
+     * Returns a pointer for the collection
+     * representing all the vertices of the graph.
      *
-     * @return Collection<node_data>
+     * @return Collection<node_data> - All the graph's vertices
      */
     @Override
     public Collection<node_info> getV() {
@@ -225,11 +228,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * This method returns a Collection containing all the
-     * nodes connected to node_id
-     * Note: this method can run in O(k) time, k - being the degree of node_id.
+     * Returns a collection containing all the neighbors of the vertex.
      *
-     * @return Collection<node_info>
+     * @return Collection<node_data> - All the vertex's neighbors
      */
     @Override
     public Collection<node_info> getV(int node_id) {
@@ -245,10 +246,9 @@ public class WGraph_DS implements weighted_graph, Serializable {
     /**
      * Delete the node (with the given ID) from the graph -
      * and removes all edges which starts or ends at this node.
-     * This method should run in O(n), |V|=n, as all the edges should be removed.
      *
      * @param key
-     * @return the data of the removed node (null if none).
+     * @return the ID of the removed vertex || null (if none)
      */
     @Override
     public node_info removeNode(int key) {
@@ -262,11 +262,10 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Delete the edge from the graph,
-     * Note: this method should run in O(1) time.
+     * Deletes the edge between two vertices.
      *
-     * @param node1
-     * @param node2
+     * @param node1 - first vertex
+     * @param node2 - second vertex
      */
     @Override
     public void removeEdge(int node1, int node2) {
@@ -279,10 +278,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the number of vertices (nodes) in the graph.
-     * Note: this method should run in O(1) time.
-     *
-     * @return
+     * @return vertices - the number of vertices in the graph
      */
     @Override
     public int nodeSize() {
@@ -290,10 +286,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the number of edges (undirectional graph).
-     * Note: this method should run in O(1) time.
-     *
-     * @return
+     * @return edges - the number of edges in the graph
      */
     @Override
     public int edgeSize() {
@@ -301,10 +294,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * Returns the Mode Count - for testing changes in the graph.
-     * Any change in the inner state of the graph should cause an increment in the ModeCount
-     *
-     * @return mc
+     * @return mc - the number of changes made to the graph
      */
     @Override
     public int getMC() {
@@ -334,6 +324,11 @@ public class WGraph_DS implements weighted_graph, Serializable {
         return Objects.hash(v_size, e_size, mc, vertices, edges);
     }
 
+    /**
+     * Represents the graph as a string.
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         LinkedList<String> edges = new LinkedList<>();
