@@ -2,8 +2,13 @@ package ex1.tests;
 
 import ex1.src.*;
 import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Test class which checks the graph's methods
+ *
+ * @author Rotem Halbreich
+ */
 
 class WGraph_DSTest {
     private weighted_graph arrow, big, single, empty;
@@ -19,7 +24,6 @@ class WGraph_DSTest {
             arrow.addNode(i);
             big.addNode(i);
         }
-        empty = null;
 
         single.addNode(0);
 
@@ -85,7 +89,10 @@ class WGraph_DSTest {
         arrow.addNode(8);
         assertEquals(9, arrow.nodeSize());
         assertEquals(9, arrow.getV().size());
-        assertNull(empty);
+        assertEquals(0, empty.nodeSize());
+        empty.addNode(345);
+        empty.addNode(45);
+        assertEquals(2, empty.nodeSize());
     }
 
     @Test
@@ -165,12 +172,27 @@ class WGraph_DSTest {
     @Test
     void getMC() {
         assertNotEquals(arrow.getMC(), single.getMC());
-        assertEquals(big.getMC(), big.getMC());
-
-        weighted_graph g1 = new WGraph_DS();
+        assertNotEquals(big.getMC(), arrow.getMC());
+        arrow.addNode(10);
+        arrow.addNode(11);
+        arrow.addNode(12);
+        arrow.addNode(23);
+        arrow.addNode(13);
+        arrow.addNode(124);
+        assertEquals(big.getMC(), arrow.getMC());
+        assertEquals(22, arrow.getMC());
+        arrow.removeNode(10);
+        arrow.addNode(10);
+        assertEquals(24, arrow.getMC());
     }
 
     @Test
     void testToString() {
+        single.addNode(123);
+        single.connect(0,123,34.7);
+        single.addNode(6);
+        single.connect(6,123,200.0);
+        assertEquals("Ver: [0, 6, 123]\n" +
+                "[{0,123;34.7}, {6,123;200.0}, {123,0;34.7}, {123,6;200.0}]", single.toString());
     }
 }

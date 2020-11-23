@@ -28,7 +28,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * This sub class represents the info of the graph's vertices
+     * This inner class represents the data of the graph's vertices:
      */
 
     private class NodeInfo implements node_info, Comparable<node_info>, Serializable {
@@ -110,6 +110,11 @@ public class WGraph_DS implements weighted_graph, Serializable {
             return "NodeInfo{" + "key = " + key + ", info = '" + info + '\'' + ", tag = " + tag + '}';
         }
 
+        /**
+         * Compares between tags (weights).
+         * @param o
+         * @return int
+         */
         @Override
         public int compareTo(node_info o) {
             Double ans = getTag();
@@ -150,13 +155,12 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * return the weight if the edge (node1, node1). In case
-     * there is no such edge - should return -1
-     * Note: this method should run in O(1) time.
+     * Return the weight of the edge between two vertices.
+     * If no such edge --> return -1
      *
      * @param node1
      * @param node2
-     * @return
+     * @return weight || -1 (if no such edge)
      */
     @Override
     public double getEdge(int node1, int node2) {
@@ -166,9 +170,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
     }
 
     /**
-     * add a new node to the graph with the given key.
-     * Note: this method should run in O(1) time.
-     * Note2: if there is already a node with such a key -> no action should be performed.
+     * Adds a new vertex to the graph with the given key.
      *
      * @param key
      */
@@ -183,9 +185,6 @@ public class WGraph_DS implements weighted_graph, Serializable {
 
     /**
      * Connects between two vertices (with an edge with weight >= 0).
-     * First we check if both vertex are exist,
-     * if the first vertex has any neighbor at all,
-     * if there's only one vertex in the graph.
      *
      * @param node1 - first vertex
      * @param node2 - second vertex
@@ -301,24 +300,41 @@ public class WGraph_DS implements weighted_graph, Serializable {
         return mc;
     }
 
+    /**
+     * Checks if two graphs are equal.
+     *
+     * @param o
+     * @return boolean (true/false)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WGraph_DS g = (WGraph_DS) o;
+        if (o == null) return false;
+
+        weighted_graph g =new WGraph_DS();
+        if(o instanceof  weighted_graph) {
+            g = (WGraph_DS) o;
+        }
+        if(o instanceof  weighted_graph_algorithms){
+            g=((weighted_graph_algorithms) o).getGraph();
+        }
         boolean flag = false;
-        if (e_size == g.e_size && v_size == g.v_size) {
+        if (e_size == g.edgeSize() && v_size == g.nodeSize()) {
             flag = true;
             for (int n : vertices.keySet()) {
                 for (node_info neighbors : getV(n)) {
-                    if (((WGraph_DS) o).getEdge(n, neighbors.getKey()) != getEdge(n, neighbors.getKey()))
+                    if (g.getEdge(n, neighbors.getKey()) != getEdge(n, neighbors.getKey()))
                         return false;
                 }
             }
         }
         return flag;
+
     }
 
+    /**
+     * HashCode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(v_size, e_size, mc, vertices, edges);
@@ -333,7 +349,6 @@ public class WGraph_DS implements weighted_graph, Serializable {
     public String toString() {
         LinkedList<String> edges = new LinkedList<>();
         String s_V = "Ver: " + vertices.keySet();
-        // String s_E = "\nEdg: " + edges;
         String s_E = "\nEdg: ";
         for (node_info n : getV()) {
             for (node_info ni : getV(n.getKey())) {

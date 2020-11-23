@@ -21,7 +21,6 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
 
     private static final String UNVISITED = "white", VISITED = "gray", END_ROUND = "black";
     public weighted_graph g;
-    private static int count = 0;
 
     public WGraph_Algo(weighted_graph g){
         init(g);
@@ -132,6 +131,7 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
      */
     @Override
     public double shortestPathDist(int src, int dest) {
+
         if (g.getNode(src) == null || g.getNode(dest) == null) return -1;
         Dijkstra((WGraph_DS) g, g.getNode(src), dest);
         double a = g.getNode(dest).getTag();
@@ -148,7 +148,7 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
      *
      * @param src  - start node
      * @param dest - end (target) node
-     * @return
+     * @return LinkedList
      */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
@@ -174,14 +174,11 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
      * Dijkstra algorithm:
      * If one of the vertices (src/dest) doesn't exist --> Throw RuntimeException
      *
-     * @param
      */
-
-    // Dijkstra algorithm help function:
     private HashMap<Integer, node_info> Dijkstra(WGraph_DS g, node_info src, int dest) {
         HashMap<Integer, node_info> prevNodes = new HashMap<>();
         PriorityQueue<node_info> PQ = new PriorityQueue<>();
-        if (g.getNode(dest) == null || src == null) throw new RuntimeException();
+        if (g.getNode(dest) == null || src == null) throw new RuntimeException("Invalid value");
 
         src.setTag(0.0);
         src.setInfo(UNVISITED);
@@ -249,12 +246,10 @@ public class WGraph_Algo implements weighted_graph_algorithms, Serializable {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             this.g = (weighted_graph) objectInputStream.readObject();
-            System.out.println(count);
-            count++;
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            System.out.println(count);
+
             return false;
         }
         return true;
