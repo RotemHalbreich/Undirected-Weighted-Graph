@@ -1,14 +1,20 @@
 # *Assignment Ex1:*
 
-## *Object Oriented Programming (Ariel University - Computer science department):*
+## :computer: *Object Oriented Programming (Ariel University - Computer science department):*
 
 ### *This project deals with the subject of "Graph Theory" focusing on undirectional weighted graph.*
-#### *The project assembeled of 3 different classes implemented from 3 different interfaces:*
+----------------------------------------------------------------------------------------------------------
+### :white_check_mark: *Initialize the project:*
+*Clone the project using the Command Line by typing the command:*
 
+`git clone https://github.com/RotemHalbreich/Ex1.git`
+
+----------------------------------------------------------------------------------------------------------
+#### 🔧 *The project assembeled of 3 different classes implemented from 3 different interfaces:*
 ------------------------------------------------------------------------------------------
-### NodeInfo:
+## :large_blue_diamond: *NodeInfo:*
 ------------------------------------------------------------------------------------------
-An inner private class representing the graph's vertices:
+*An inner private class representing the graph's vertices:*
 	
 Including methods:
 - `getKey()` - Get a unique key ID for each vertex.
@@ -18,13 +24,13 @@ Including methods:
 - `compareTo()` - A function for tags comparison (weight).
 
 ------------------------------------------------------------------------------------------
-### WGraph_DS:
+## :large_blue_diamond: *WGraph_DS:*
 ------------------------------------------------------------------------------------------
-Represents a graph assembeled of vertices:
+*Represents a graph assembeled of vertices:
 In this class I chose using the HashMap data structure for its fast running time O(1).
 My implementation is based on HashMap of vertices linked with a unique key for each vertex,
 and HashMap of edges which links a vertex by a unique key to another vertex including
-the weight of the edge between them, using HashMap inside HashMap.
+the weight of the edge between them, using HashMap inside HashMap.*
 	
 Including methods:
 - `getNode()` - Get a vertex by a unique key.
@@ -41,10 +47,10 @@ Including methods:
 - `getMC()` - returns the number of changes made to the graph.
 
 ------------------------------------------------------------------------------------------
-### WGraph_Algo: 
+## :large_blue_diamond: *WGraph_Algo:* 
 ------------------------------------------------------------------------------------------
-Represents the algorithms we apply on the graph. 
-In this class I use Dijkstra & BFS algorithms for implementing the algorithms below:
+*Represents the algorithms we apply on the graph. 
+In this class I use Dijkstra & BFS algorithms for implementing the algorithms below:*
 	
 - `init()` - Initializes the graph.
 - `getGraph()` - Returns an undirectional weighted graph.
