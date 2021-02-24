@@ -2,7 +2,7 @@
 
 ## :computer: *Object Oriented Programming (Ariel University - Computer science department):*
 
-### *This project deals with the subject of "Graph Theory" focusing on undirectional weighted graph.*
+### :bar_chart: *This project deals with the subject of "Graph Theory" focusing on undirectional weighted graph.*
 ----------------------------------------------------------------------------------------------------------
 ### :white_check_mark: *Initialize the project:*
 *Clone the project using the Command Line by typing the command:*
@@ -10,10 +10,9 @@
 `git clone https://github.com/RotemHalbreich/Ex1.git`
 
 ----------------------------------------------------------------------------------------------------------
-#### 🔧 *The project assembeled of 3 different classes implemented from 3 different interfaces:*
+### 🔧 *The project assembeled of 3 different classes implemented from 3 different interfaces:*
 ------------------------------------------------------------------------------------------
 ## :large_blue_diamond: *NodeInfo:*
-------------------------------------------------------------------------------------------
 *An inner private class representing the graph's vertices:*
 	
 Including methods:
@@ -25,7 +24,6 @@ Including methods:
 
 ------------------------------------------------------------------------------------------
 ## :large_blue_diamond: *WGraph_DS:*
-------------------------------------------------------------------------------------------
 *Represents a graph assembeled of vertices:
 In this class I chose using the HashMap data structure for its fast running time O(1).
 My implementation is based on HashMap of vertices linked with a unique key for each vertex,
@@ -48,7 +46,6 @@ Including methods:
 
 ------------------------------------------------------------------------------------------
 ## :large_blue_diamond: *WGraph_Algo:* 
-------------------------------------------------------------------------------------------
 *Represents the algorithms we apply on the graph. 
 In this class I use Dijkstra & BFS algorithms for implementing the algorithms below:*
 	
