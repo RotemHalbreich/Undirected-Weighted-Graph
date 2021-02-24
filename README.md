@@ -2,7 +2,7 @@
 
 ## :computer: *Object Oriented Programming (Ariel University - Computer science department):*
 
-### :bar_chart: *This project deals with the subject of "Graph Theory" focusing on undirectional weighted graph.*
+### :bar_chart: *This project deals with the subject of "Graph Theory" focusing on undirected weighted graph.*
 ----------------------------------------------------------------------------------------------------------
 ### :white_check_mark: *Initialize the project:*
 *Clone the project using the Command Line by typing the command:*
